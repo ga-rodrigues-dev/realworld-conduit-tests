@@ -1,6 +1,6 @@
-# RealWorld App com Docker
+# RealWorld App com Docker e Cobertura JaCoCo
 
-Este projeto demonstra como executar o frontend (Angular) e o backend (Spring Boot) da aplicação RealWorld usando Docker e Docker Compose.
+Este projeto demonstra como executar o frontend (Angular) e o backend (Spring Boot) da aplicação RealWorld usando Docker e Docker Compose, com a funcionalidade adicional de coletar informações de cobertura de código do backend usando JaCoCo.
 
 ## Pré-requisitos
 
@@ -14,6 +14,7 @@ Certifique-se de ter o Docker e o Docker Compose instalados em sua máquina. Voc
 .
 ├── realworld-springboot-java
 │   ├── Dockerfile
+│   ├── build.gradle
 │   └── ... (código fonte do backend)
 ├── realworld-app-angular-v20
 │   ├── Dockerfile
@@ -54,7 +55,32 @@ Após os contêineres serem iniciados, você pode acessar a aplicação:
 *   **Frontend (Angular)**: Abra seu navegador e acesse [http://localhost:4200](http://localhost:4200)
 *   **Backend (Spring Boot)**: O backend estará disponível em [http://localhost:8080](http://localhost:8080) (para chamadas da API pelo frontend).
 
-### 4. Verificar o Status dos Contêineres
+### 4. Coletar Cobertura de Código com JaCoCo
+
+O backend está configurado para coletar dados de cobertura de código usando o agente JaCoCo. O arquivo `jacoco.exec` será gerado e persistido no seu sistema de arquivos local.
+
+**Passos para coletar e gerar o relatório:**
+
+1.  **Inicie os contêineres** conforme o passo 2 acima (`docker-compose up --build -d`).
+2.  **Interaja com a aplicação** através do frontend (por exemplo, faça login, crie um artigo, etc.) para que o backend execute o código e colete os dados de cobertura.
+3.  **Pare os contêineres** para que o agente JaCoCo finalize a escrita do arquivo `jacoco.exec`:
+
+    ```bash
+    docker-compose stop
+    ```
+
+    O arquivo `jacoco.exec` será salvo no diretório `./realworld-springboot-java/jacoco/` na raiz do seu projeto local.
+
+4.  **Gerar o Relatório JaCoCo**: Navegue até o diretório do backend e execute a tarefa `jacocoTestReport` do Gradle. Certifique-se de que o `jacoco.exec` esteja presente no diretório `./realworld-springboot-java/jacoco/`.
+
+    ```bash
+    cd realworld-springboot-java
+    ./gradlew jacocoTestReport
+    ```
+
+    O relatório HTML será gerado em `realworld-springboot-java/build/reports/jacoco/jacocoTestReport/html/index.html`.
+
+### 5. Verificar o Status dos Contêineres
 
 Para ver o status dos contêineres em execução:
 
@@ -62,7 +88,7 @@ Para ver o status dos contêineres em execução:
 docker-compose ps
 ```
 
-### 5. Visualizar Logs
+### 6. Visualizar Logs
 
 Para visualizar os logs de um serviço específico (por exemplo, `frontend` ou `backend`):
 
@@ -71,7 +97,7 @@ docker-compose logs -f frontend
 docker-compose logs -f backend
 ```
 
-### 6. Parar e Remover os Contêineres
+### 7. Parar e Remover os Contêineres
 
 Para parar e remover todos os contêineres, redes e volumes criados pelo `docker-compose.yml`:
 

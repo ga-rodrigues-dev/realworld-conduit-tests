@@ -36,6 +36,18 @@ dependencies {
 
 apply from: 'test.gradle'
 
+jacoco {
+    toolVersion = "0.8.11"
+}
+
+jacocoTestReport {
+    executionData.setFrom(fileTree(project.rootDir).include("**/*.exec"))
+    reports {
+        xml.required = true
+        html.required = true
+    }
+}
+
 test {
     useJUnitPlatform()
 }
