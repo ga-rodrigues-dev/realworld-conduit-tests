@@ -1,5 +1,9 @@
 package io.github.raeperd.realworld.domain.user;
 
+import io.github.raeperd.realworld.domain.article.Article;
+import io.github.raeperd.realworld.domain.article.ArticleContents;
+import io.github.raeperd.realworld.domain.article.ArticleUpdateRequest;
+import io.github.raeperd.realworld.domain.article.comment.Comment;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -7,8 +11,9 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class UserTest {
@@ -22,6 +27,24 @@ class UserTest {
     private UserName userNameMock;
     @Mock
     private Password passwordMock;
+
+    @Mock
+    private Email followedEmailMock;
+
+    @Mock
+    private UserName followedUserNameMock;
+
+    @Mock
+    private Password followedPasswordMock;
+
+    @Mock
+    private Article articleMock;
+
+    @Mock
+    private ArticleContents articleContentsMock;
+
+    @Mock
+    private ArticleUpdateRequest articleUpdateReqMock;
 
     @Test
     void when_create_user_getImage_return_null() {
@@ -122,4 +145,111 @@ class UserTest {
 
         assertThat(user.getImage()).isEqualTo(imageToChange);
     }
+
+    @Test
+    void when_follows_expect_viewProfile_followingUser_following_true() {
+        final var user = User.of(emailMock, userNameMock, passwordMock);
+        final var followedUser = User.of(followedEmailMock, followedUserNameMock, followedPasswordMock);
+
+        user.followUser(followedUser);
+
+        assertThat(user.viewProfile(followedUser))
+                .hasFieldOrPropertyWithValue("following", true);
+    }
+
+    @Test
+    void when_unfollows_expect_viewProfile_followingUser_following_false() {
+        final var user = User.of(emailMock, userNameMock, passwordMock);
+        final var followedUser = User.of(followedEmailMock, followedUserNameMock, followedPasswordMock);
+
+        user.followUser(followedUser);
+        user.unfollowUser(followedUser);
+
+        assertThat(user.viewProfile(followedUser))
+                .hasFieldOrPropertyWithValue("following", false);
+    }
+
+    @Test
+    void when_viewComment_expect_same_comment_instance_returned() {
+        final var viewer = User.of(emailMock, userNameMock, passwordMock);
+        final var author = User.of(followedEmailMock, followedUserNameMock, followedPasswordMock);
+        final var comment = new Comment(articleMock, author, "body");
+
+        assertThat(viewer.viewComment(comment)).isSameAs(comment);
+    }
+
+    @Test
+    void when_viewer_does_not_follow_author_expect_viewComment_sets_following_false() {
+        final var viewer = User.of(emailMock, userNameMock, passwordMock);
+        final var author = User.of(followedEmailMock, followedUserNameMock, followedPasswordMock);
+        final var comment = new Comment(articleMock, author, "body");
+
+        viewer.viewComment(comment);
+
+        assertThat(comment.getAuthor().getProfile())
+                .hasFieldOrPropertyWithValue("following", false);
+    }
+
+    @Test
+    void when_viewer_follows_author_expect_viewComment_sets_following_true() {
+        final var viewer = User.of(emailMock, userNameMock, passwordMock);
+        final var author = User.of(followedEmailMock, followedUserNameMock, followedPasswordMock);
+        final var comment = new Comment(articleMock, author, "body");
+
+        viewer.followUser(author);
+        viewer.viewComment(comment);
+
+        assertThat(comment.getAuthor().getProfile())
+                .hasFieldOrPropertyWithValue("following", true);
+    }
+
+    @Test
+    void when_user_updates_other_user_article_expect_error() {
+        final var viewer = User.of(emailMock, userNameMock, passwordMock);
+        final var author = User.of(followedEmailMock, followedUserNameMock, followedPasswordMock);
+        final var article = spy(new Article(author, articleContentsMock));
+
+        assertThatThrownBy(() -> {viewer.updateArticle(article, articleUpdateReqMock);}).isInstanceOf(IllegalAccessError.class);
+        verify(article, never()).updateArticle(any());
+    }
+
+    @Test
+    void when_user_updates_own_article_expect_article_updated() {
+
+        final var user = User.of(emailMock, userNameMock, passwordMock);
+        final var article = spy(new Article(user, articleContentsMock));
+        final var result = user.updateArticle(article, articleUpdateReqMock);
+        assertSame(result, article);
+        verify(article).updateArticle(articleUpdateReqMock);
+
+    }
+
+    @Test
+    void when_equals_at_same_user_expect_true() {
+        final var user = User.of(emailMock, userNameMock, passwordMock);
+        assertThat(user.equals(user)).isTrue();
+    }
+
+    @Test
+    void when_equals_at_null_expect_false() {
+        final var user = User.of(emailMock, userNameMock, passwordMock);
+        assertThat(user.equals(null)).isFalse();
+    }
+
+    @Test
+    void when_equals_at_different_class_obj_expect_false() {
+        final var user = User.of(emailMock, userNameMock, passwordMock);
+        Object notAUser = "a@x.com";
+        assertThat(user.equals(notAUser)).isFalse();
+    }
+
+    @Test
+    void when_equals_at_different_obj_same_email_expect_true() {
+        final var user = User.of(emailMock, userNameMock, passwordMock);
+        final var otherUser = User.of(emailMock, followedUserNameMock, followedPasswordMock);
+        assertThat(user.equals(otherUser)).isTrue();
+    }
+
+
+
 }

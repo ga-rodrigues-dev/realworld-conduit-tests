@@ -18,7 +18,7 @@ class Base64URL {
     }
 
     static String stringFromBase64URL(String base64URL) {
-        return new String(Base64.getUrlDecoder().decode(base64URL));
+        return new String(Base64.getUrlDecoder().decode(base64URL), StandardCharsets.UTF_8);
     }
 
 }

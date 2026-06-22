@@ -40,17 +40,25 @@ jacoco {
     toolVersion = "0.8.11"
 }
 
+test {
+    useJUnitPlatform()
+    jacoco {
+        destinationFile = layout.buildDirectory.file("jacoco/gradle-test.exec").get().asFile
+    }
+}
+
 jacocoTestReport {
-    executionData.setFrom(fileTree(project.rootDir).include("**/*.exec"))
+    executionData.setFrom(layout.buildDirectory.file("jacoco/gradle-test.exec"))
     reports {
         xml.required = true
         html.required = true
     }
 }
 
-test {
-    useJUnitPlatform()
+jacocoTestCoverageVerification {
+    executionData.setFrom(layout.buildDirectory.file("jacoco/gradle-test.exec"))
 }
+
 
 jib {
     from {

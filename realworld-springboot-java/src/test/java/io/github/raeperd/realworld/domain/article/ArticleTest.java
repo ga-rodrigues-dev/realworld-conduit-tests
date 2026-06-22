@@ -57,4 +57,9 @@ class ArticleTest {
                 .isEqualTo(article)
                 .hasSameHashCodeAs(article);
     }
+
+
+
+
+
 }
