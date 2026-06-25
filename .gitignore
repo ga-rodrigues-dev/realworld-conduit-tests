@@ -24,3 +24,15 @@ hs_err_pid*
 replay_pid*
 
 .qlty/
+/.idea/modules/realworld-spring-boot-java.main.iml
+/.idea/copilotDiffState.xml
+/.idea/google-java-format.xml
+/.idea/gradle.xml
+/realworld-springboot-java/jacoco/jacoco.exec
+/.idea/misc.xml
+/.idea/modules.xml
+/.idea/realworld-conduit.iml
+/.idea/modules/realworld-spring-boot-java.test.iml
+/.idea/vcs.xml
+/.idea/compiler.xml
+/.idea/workspace.xml
