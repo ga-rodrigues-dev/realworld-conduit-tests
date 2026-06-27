@@ -1,18 +1,17 @@
 test {
     useJUnitPlatform()
-    outputs.upToDateWhen { false }
+    finalizedBy 'jacocoTestReport'
 }
 
 jacocoTestReport {
-    dependsOn test
     reports {
         html.required = true
         xml.required = true
     }
+    finalizedBy 'jacocoTestCoverageVerification'
 }
 
 jacocoTestCoverageVerification {
-    dependsOn jacocoTestReport
     violationRules {
         rule {
             element = 'PACKAGE'
@@ -75,8 +74,4 @@ jacocoTestCoverageVerification {
             }
         }
     }
-}
-
-check {
-    dependsOn jacocoTestCoverageVerification
 }

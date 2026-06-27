@@ -36,4 +36,24 @@ class ArticleTitleTest {
                 .isEqualTo(articleTitle)
                 .hasSameHashCodeAs(articleTitle);
     }
+
+    @Test
+    void when_articleTitle_compared_with_null_expect_not_equal() {
+        var articleTitle = ArticleTitle.of("some title");
+
+        assertThat(articleTitle).isNotEqualTo(null);
+    }
+
+    @Test
+    void when_articleTitle_compared_with_different_class_expect_not_equal() {
+        var articleTitle = ArticleTitle.of("some title");
+
+        assertThat(articleTitle).isNotEqualTo("some-title");
+    }
+
+    @Test
+    void when_articleTitle_equals_same_reference_expect_true() {
+        var articleTitle = ArticleTitle.of("some title");
+        assertThat(articleTitle).isEqualTo(articleTitle).hasSameHashCodeAs(articleTitle);
+    }
 }

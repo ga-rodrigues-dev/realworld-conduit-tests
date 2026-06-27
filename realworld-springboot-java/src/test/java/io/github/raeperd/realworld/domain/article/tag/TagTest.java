@@ -44,4 +44,24 @@ class TagTest {
                 .isEqualTo(tagWithSameValue)
                 .hasSameHashCodeAs(tagWithSameValue);
     }
+
+    @Test
+    void when_compare_tag_with_null_expect_not_equal() {
+        final var tag = new Tag("some-value");
+
+        assertThat(tag).isNotEqualTo(null);
+    }
+
+    @Test
+    void when_compare_tag_with_different_class_expect_not_equal() {
+        final var tag = new Tag("some-value");
+
+        assertThat(tag).isNotEqualTo("some-value");
+    }
+
+    @Test
+    void when_tag_equals_same_reference_expect_true() {
+        final var tag = new Tag("some-value");
+        assertThat(tag).isEqualTo(tag).hasSameHashCodeAs(tag);
+    }
 }

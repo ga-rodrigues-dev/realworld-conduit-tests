@@ -41,6 +41,26 @@ class CommentTest {
                 .hasSameHashCodeAs(commentRight);
     }
 
+    @Test
+    void when_compare_comment_with_null_expect_not_equal(@Mock Article article, @Mock User author) {
+        var comment = commentWithCreatedAt(article, author, "body", Instant.now());
+
+        assertThat(comment).isNotEqualTo(null);
+    }
+
+    @Test
+    void when_compare_comment_with_different_class_expect_not_equal(@Mock Article article, @Mock User author) {
+        var comment = commentWithCreatedAt(article, author, "body", Instant.now());
+
+        assertThat(comment).isNotEqualTo("body");
+    }
+
+    @Test
+    void when_comment_equals_same_reference_expect_true(@Mock Article article, @Mock User author) {
+        var comment = commentWithCreatedAt(article, author, "body", Instant.now());
+        assertThat(comment).isEqualTo(comment).hasSameHashCodeAs(comment);
+    }
+
     private static Stream<Arguments> provideDifferentComments() {
         var articleSample = mock(Article.class);
         var authorSample = mock(User.class);
