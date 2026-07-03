@@ -116,7 +116,7 @@ class ArticleTest {
         idField.setAccessible(true);
         idField.set(comment, 1L);
 
-        assertThrows(IllegalAccessError.class, () -> {;
+        assertThrows(IllegalAccessError.class, () -> {
             article.removeCommentByUser(author, comment.getId());
         });
     }
@@ -130,7 +130,7 @@ class ArticleTest {
         idField.setAccessible(true);
         idField.set(comment, 1L);
 
-        assertThrows(IllegalAccessError.class, () -> {;
+        assertThrows(IllegalAccessError.class, () -> {
             article.removeCommentByUser(otherUser, comment.getId());
         });
     }
@@ -144,7 +144,7 @@ class ArticleTest {
         idField.setAccessible(true);
         idField.set(comment, 1L);
 
-        assertThrows(IllegalAccessError.class, () -> {;
+        assertThrows(IllegalAccessError.class, () -> {
             article.removeCommentByUser(anotherUser, comment.getId());
         });
     }
