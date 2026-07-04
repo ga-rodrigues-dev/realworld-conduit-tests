@@ -1,3 +1,5 @@
+import { nanoid } from 'nanoid';
+
 export type Article = {
     id: string
     title: string
@@ -12,13 +14,13 @@ interface ArticleOptions {
     overrides?:Partial<Article>
 }
 
-export function createArticle({articleType = "article", uniqueId = crypto.randomUUID(), overrides = {}}:ArticleOptions = {}): Article {
+export function createArticle({articleType = "article", uniqueId = nanoid(3), overrides = {}}:ArticleOptions = {}): Article {
     return {
         id: uniqueId,
-        title: `${articleType}-${uniqueId}`,
-        subject: `${articleType}-subject-${uniqueId}`,
-        content: `${articleType}-content-${uniqueId}`,
-        tagList: [`${articleType}-tag1-${uniqueId}`, `${articleType}-tag2-${uniqueId}`, `${articleType}-tag3-${uniqueId}`],
+        title: `${articleType} ${uniqueId}`,
+        subject: `${articleType} subject ${uniqueId}`,
+        content: `${articleType} content ${uniqueId}`,
+        tagList: [`${articleType}tag1_${uniqueId}`, `${articleType}tag2_${uniqueId}`, `${articleType}_tag3_${uniqueId}`],
         ...overrides,
     };
 }
@@ -36,12 +38,12 @@ interface UserOptions {
     overrides?:Partial<User>
 }
 
-export function createUser({userType = "user", uniqueId = crypto.randomUUID(), overrides = {}}:UserOptions = {}): User {
+export function createUser({userType = "user", uniqueId = nanoid(3), overrides = {}}:UserOptions = {}): User {
     return {
         id: uniqueId,
-        username: `${userType}-${uniqueId}`,
-        password: `password-${uniqueId}`,
-        email: `${userType}-${uniqueId}@example.com`,
+        username: `${userType}_${uniqueId}`,
+        password: `password_${uniqueId}`,
+        email: `${userType}_${uniqueId}@example.com`,
         ...overrides,
     };
 }

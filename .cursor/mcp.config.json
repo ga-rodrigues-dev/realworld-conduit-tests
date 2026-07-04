@@ -1,0 +1,28 @@
+{
+  "saveSession": true,
+  "outputDir": "e2e/playwright-mcp",
+  "codegen": "typescript",
+  "capabilities": [
+    "core",
+    "core-navigation",
+    "core-tabs",
+    "core-input",
+    "core-install",
+    "network",
+    "pdf",
+    "storage",
+    "testing",
+    "vision",
+    "devtools"
+  ],
+  "testIdAttribute": "data-action",
+  "console": {
+    "level": "warning"
+  },
+
+  "browser": {
+    "contextOptions": {
+      "viewport": { "width": 1280, "height": 720 }
+    }
+  }
+}
