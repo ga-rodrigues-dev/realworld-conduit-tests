@@ -18,6 +18,11 @@ export type SeededArticle = {
   articleData: Article
 }
 
+export type PublishedArticle = {
+  articleUrl: string
+  articleData: Article
+}
+
 type Fixtures = {
   signInPage: SignInPage
   signUpPage: SignUpPage
@@ -31,6 +36,7 @@ type Fixtures = {
   articleData: Article
   loggedInUser: User
   seededArticle: SeededArticle
+  publishedArticle: PublishedArticle
 }
 
 async function registerUser(signUpPage: SignUpPage, user: User) {
@@ -82,6 +88,13 @@ export const test = base.extend<Fixtures>({
   loggedInUser: async ({ signUpPage, user }, use) => {
     await registerUser(signUpPage, user)
     await use(user)
+  },
+
+  publishedArticle: async ({ loggedInUser, navBar, articleEdit, page, articleData }, use) => {
+    await navBar.newArticleLink.click()
+    await articleEdit.publishArticle(articleData)
+    const articleUrl = page.url()
+    await use({ articleUrl, articleData })
   },
 
   seededArticle: async ({ signUpPage, navBar, articleEdit, page, articleData }, use) => {
