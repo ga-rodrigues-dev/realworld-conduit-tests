@@ -44,11 +44,5 @@ desktop.ini
 e2e/playwright-mcp/
 exploratory-screenshots/
 .cursor/skills/playwright-mcp-to-spec/SKILL.md
-openspec/changes/archive/2026-07-03-e2e-split-specs/.openspec.yaml
-openspec/changes/archive/2026-07-03-e2e-split-specs/design.md
-openspec/changes/archive/2026-07-03-e2e-split-specs/proposal.md
-openspec/changes/archive/2026-07-03-e2e-split-specs/tasks.md
-openspec/changes/archive/2026-07-03-e2e-split-specs/specs/e2e-spec-structure/spec.md
-openspec/specs/e2e-spec-structure/spec.md
 decisões.md
 exploratory-tours.md

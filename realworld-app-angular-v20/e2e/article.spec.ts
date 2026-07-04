@@ -1,6 +1,6 @@
 import { test, expect } from './fixtures';
 import { createArticle } from './support/factories';
-import type { Article } from './support/factories';
+import { articleInvalidScenarios } from './support/invalidScenarios';
 
 test.describe("article", () => {
 
@@ -32,50 +32,7 @@ test.describe("article", () => {
     expect(JSON.stringify(filteredInputTags)).toBe(JSON.stringify(filteredTagList))
   })
 
-  const invalidScenarios: Array<{
-    name: string,
-    override: Partial<Article>
-  }> = [
-      {
-        name: 'empty title',
-        override: { title: '' }
-      },
-      {
-        name: 'blank title',
-        override: { title: '   ' }
-      },
-      {
-        name: 'empty subject',
-        override: { subject: '' }
-      },
-      {
-        name: 'blank subject',
-        override: { subject: '   ' }
-      },
-      {
-        name: 'empty content',
-        override: { content: '' }
-      },
-      {
-        name: 'blank content',
-        override: { content: '   ' }
-      },
-      {
-        name: 'empty tags',
-        override: { tagList: [] }
-      },
-      {
-        name: 'blank tags',
-        override: { tagList: [' '] }
-      },
-
-      {
-        name: 'duplicate tags',
-        override: { tagList: ['duplicate_tag', 'duplicate_tag'] }
-      }
-    ]
-
-  for (const scenario of invalidScenarios) {
+  for (const scenario of articleInvalidScenarios) {
     test(`invalid article creation: ${scenario.name}`, async ({ page, articleEdit, navBar, loggedInUser }) => {
       const scenarioArticle = createArticle({ overrides: scenario.override })
       await navBar.newArticleLink.click();

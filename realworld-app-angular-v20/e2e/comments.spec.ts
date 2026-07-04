@@ -1,5 +1,6 @@
 import { test, expect } from './fixtures';
 import { nanoid } from 'nanoid';
+import { commentInvalidScenarios } from './support/invalidScenarios';
 
 test.describe("comments", () => {
 
@@ -71,18 +72,7 @@ test.describe("comments", () => {
     await expect(articlePage.deleteCommentBtn(uniqueCommentId, commentAuthor.username)).not.toBeVisible()
   })
 
-  const invalidScenarios = [
-    {
-      name: 'empty comment',
-      comment: ''
-    },
-    {
-      name: 'blank comment',
-      comment: '   '
-    }
-  ]
-
-  for (const scenario of invalidScenarios) {
+  for (const scenario of commentInvalidScenarios) {
     test(`invalid comment creation: ${scenario.name}`, async ({ page, signInPage, articlePage, seededArticle }) => {
       const { commentAuthor, articleUrl } = seededArticle
       await signInPage.goto()
