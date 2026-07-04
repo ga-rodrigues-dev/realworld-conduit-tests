@@ -38,30 +38,7 @@ replay_pid*
 /.idea/workspace.xml
 desktop.ini
 /.idea/inspectionProfiles/Project_Default.xml
-.cursor/commands/opsx-apply.md
-.cursor/commands/opsx-archive.md
-.cursor/commands/opsx-explore.md
-.cursor/commands/opsx-onboard.md
-.cursor/commands/opsx-propose.md
-.cursor/commands/opsx-sync.md
-.cursor/skills/openspec-apply-change/SKILL.md
-.cursor/skills/openspec-archive-change/SKILL.md
-.cursor/skills/openspec-explore/SKILL.md
-.cursor/skills/openspec-onboard/SKILL.md
-.cursor/skills/openspec-propose/SKILL.md
-.cursor/skills/openspec-sync-specs/SKILL.md
-openspec/config.yaml
-openspec/changes/archive/2026-07-03-e2e-fixture-tiers/.openspec.yaml
-openspec/changes/archive/2026-07-03-e2e-fixture-tiers/design.md
-openspec/changes/archive/2026-07-03-e2e-fixture-tiers/proposal.md
-openspec/changes/archive/2026-07-03-e2e-fixture-tiers/tasks.md
-openspec/changes/archive/2026-07-03-e2e-fixture-tiers/specs/e2e-test-fixtures/spec.md
-openspec/changes/e2e-split-specs/.openspec.yaml
-openspec/changes/e2e-split-specs/design.md
-openspec/changes/e2e-split-specs/proposal.md
-openspec/changes/e2e-split-specs/tasks.md
-openspec/changes/e2e-split-specs/specs/e2e-spec-structure/spec.md
-openspec/specs/e2e-test-fixtures/spec.md
+.cursor/
 
 # Playwright MCP exploratory session artifacts
 e2e/playwright-mcp/

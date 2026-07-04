@@ -37,7 +37,6 @@ yarn-error.log
 testem.log
 /typings
 .cursor
-openspec
 
 # System files
 .DS_Store
